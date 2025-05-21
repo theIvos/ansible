@@ -21,3 +21,26 @@
      owner: root
      group: root
      mode: 0644
+
+- hosts: workstations
+  become: true
+  tasks:
+
+  - name: install unzip
+    package:
+      name: unzip
+
+  - name: download terraform
+    get_url:
+      url: https://releases.hashicorp.com/terraform/1.11.4/terraform_1.11.4_linux_amd64.zip
+      dest: /tmp/terraform.zip
+      mode: 0644
+
+  - name: extract terraform
+    unarchive:
+      src: /tmp/terraform.zip
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+      owner: root
+      group: root
